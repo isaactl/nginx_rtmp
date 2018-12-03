@@ -1,0 +1,8 @@
+workspace:
+
+pipeline:
+  publish:
+    image: plugins/docker
+    repo: yefengorg/nginx_rtmp
+    secrets: [ docker_username, docker_password ]
+    tag: latest

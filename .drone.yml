@@ -3,13 +3,6 @@ workspace:
   path: src/github.com/yefengorg/nginx_rtmp
 
 pipeline:
-  staticAnalysis:
-    image: library/golang:1.10
-    commands:
-    - go get -u golang.org/x/lint/golint
-    - golint $(go list ./... | grep -v vendor); echo
-    - go vet $(go list ./... | grep -v vendor); echo
-
   unittest:
     image: library/golang:1.10
     commands:

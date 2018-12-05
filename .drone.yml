@@ -1,6 +1,6 @@
 workspace:
   base: /go
-  path: src/github.com/nginx_rtmp
+  path: src/github.com/yefengorg/nginx_rtmp
 
 pipeline:
   staticAnalysis:
@@ -22,7 +22,7 @@ pipeline:
       - GOOS=linux
       - GOARCH=amd64
       commands:
-      - go build -a -tags netgo -ldflags '-w' -o ./bin/uploader github.com/nginx_rtmp
+      - go build -a -tags netgo -ldflags '-w' -o ./bin/uploader github.com/yefengorg/nginx_rtmp
       when:
         branch:
         - master

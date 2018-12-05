@@ -10,22 +10,22 @@ pipeline:
     - golint $(go list ./... | grep -v vendor); echo
     - go vet $(go list ./... | grep -v vendor); echo
 
-    unittest:
-      image: library/golang:1.10
-      commands:
-      - go test $(go list ./... | grep -v vendor) -cover
+  unittest:
+    image: library/golang:1.10
+    commands:
+    - go test $(go list ./... | grep -v vendor) -cover
 
-    build:
-      image: library/golang:1.10-alpine
-      environment:
-      - CGO_ENABLED=0
-      - GOOS=linux
-      - GOARCH=amd64
-      commands:
-      - go build -a -tags netgo -ldflags '-w' -o ./bin/uploader github.com/yefengorg/nginx_rtmp
-      when:
-        branch:
-        - master
+  build:
+    image: library/golang:1.10-alpine
+    environment:
+    - CGO_ENABLED=0
+    - GOOS=linux
+    - GOARCH=amd64
+    commands:
+    - go build -a -tags netgo -ldflags '-w' -o ./bin/uploader github.com/yefengorg/nginx_rtmp
+    when:
+      branch:
+      - master
 
   publish:
     image: plugins/docker

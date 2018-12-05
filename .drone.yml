@@ -1,6 +1,32 @@
 workspace:
+  base: /go
+  path: src/github.com/nginx_rtmp
 
 pipeline:
+  staticAnalysis:
+    image: library/golang:1.10
+    commands:
+    - go get -u golang.org/x/lint/golint
+    - golint $(go list ./... | grep -v vendor); echo
+    - go vet $(go list ./... | grep -v vendor); echo
+
+    unittest:
+      image: library/golang:1.10
+      commands:
+      - go test $(go list ./... | grep -v vendor) -cover
+
+    build:
+      image: library/golang:1.10-alpine
+      environment:
+      - CGO_ENABLED=0
+      - GOOS=linux
+      - GOARCH=amd64
+      commands:
+      - go build -a -tags netgo -ldflags '-w' -o ./bin/uploader github.com/nginx_rtmp
+      when:
+        branch:
+        - master
+
   publish:
     image: plugins/docker
     repo: yefengorg/nginx_rtmp

@@ -155,6 +155,7 @@ COPY --from=build-ffmpeg /usr/lib/libfdk-aac.so.1 /usr/lib/libfdk-aac.so.1
 
 # Add NGINX config and static files.
 ADD nginx.conf /opt/nginx/nginx.conf
+ADD ./bin/uploader /usr/local/bin/uploader
 RUN mkdir -p /opt/data && mkdir /www
 ADD static /www/static
 
